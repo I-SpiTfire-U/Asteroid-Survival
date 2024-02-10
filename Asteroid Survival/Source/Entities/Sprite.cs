@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Asteroid_Survival.Source
+namespace Asteroid_Survival.Source.Entities
 {
     internal class Sprite
     {
@@ -28,7 +28,7 @@ namespace Asteroid_Survival.Source
 
         internal virtual void Update() { }
 
-        internal virtual void Draw(Rectangle? source = null) => Globals.SpriteBatch.Draw(Texture, Position, source, Color.White, Rotation, Origin, 1, SpriteEffects.None, 0);
+        internal virtual void Draw(SpriteBatch spriteBatch, Rectangle? source = null) => spriteBatch.Draw(Texture, Position, source, Color.White, Rotation, Origin, 1, SpriteEffects.None, 0);
 
         internal void ScreenWrap(int minWidth, int minHeight, int maxWidth, int maxHeight)
         {

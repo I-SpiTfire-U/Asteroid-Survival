@@ -13,29 +13,41 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Audio/Explosion1.wav
+#begin Audio/GameLose.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Explosion1.wav
+/build:Audio/GameLose.wav
 
-#begin Audio/Explosion2.wav
+#begin Audio/GameStart.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Explosion2.wav
+/build:Audio/GameStart.wav
 
-#begin Audio/Shoot.wav
+#begin Audio/LargeExplosion.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Shoot.wav
+/build:Audio/LargeExplosion.wav
 
-#begin Audio/Start.wav
+#begin Audio/MediumExplosion.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Audio/Start.wav
+/build:Audio/MediumExplosion.wav
+
+#begin Audio/PlayerShoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/PlayerShoot.wav
+
+#begin Audio/SmallExplosion.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/SmallExplosion.wav
 
 #begin Fonts/Hyperspace.spritefont
 /importer:FontDescriptionImporter
