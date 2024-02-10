@@ -23,22 +23,10 @@ namespace Asteroid_Survival.Source.Entities
 
         internal override void Update()
         {
-            // TODO: Add your update code here
             Position += new Vector2((float)Math.Cos(Rotation), (float)Math.Sin(Rotation)) * (3 - Size);
-
             base.Update();
         }
 
-        internal override void Draw(Rectangle? source = null)
-        {
-            // TODO: Add your draw code here
-
-            base.Draw(source);
-        }
-
-        internal bool IsCollidingWith(Vector2 objectPosition)
-        {
-            return Vector2.Distance(Position, objectPosition) < _Radius;
-        }
+        internal bool IsCollidingWith(Vector2 objectPosition) => Vector2.Distance(Position, objectPosition) < _Radius;
     }
 }

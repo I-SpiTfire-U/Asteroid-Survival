@@ -17,41 +17,12 @@ namespace Asteroid_Survival.Source
         private readonly int _SizeOfTextures;
         private readonly int _Interval;
 
-        internal Animation(int numberOfFrames, int numberOfColumns, int sizeOfTextures, int interval)
-        {
-            _NumberOfFrames = numberOfFrames;
-            _NumberOfColumns = numberOfColumns;
-            _SizeOfTextures = sizeOfTextures;
-            _Interval = interval;
-        }
-
-        internal Animation(int numberOfFrames, int numberOfColumns, int sizeOfTextures, int interval, int offsetX, int offsetY)
-        {
-            _NumberOfFrames = numberOfFrames;
-            _NumberOfColumns = numberOfColumns;
-            _SizeOfTextures = sizeOfTextures;
-            _Interval = interval;
-            _OffsetX = offsetX;
-            _OffsetY = offsetY;
-        }
-
         internal Animation(int numberOfFrames, int numberOfColumns, int sizeOfTextures, int interval, int padding)
         {
             _NumberOfFrames = numberOfFrames;
             _NumberOfColumns = numberOfColumns;
             _SizeOfTextures = sizeOfTextures;
             _Interval = interval;
-            _Padding = padding;
-        }
-
-        internal Animation(int numberOfFrames, int numberOfColumns, int sizeOfTextures, int interval, int offsetX, int offsetY, int padding)
-        {
-            _NumberOfFrames = numberOfFrames;
-            _NumberOfColumns = numberOfColumns;
-            _SizeOfTextures = sizeOfTextures;
-            _Interval = interval;
-            _OffsetX = offsetX;
-            _OffsetY = offsetY;
             _Padding = padding;
         }
 
@@ -88,9 +59,6 @@ namespace Asteroid_Survival.Source
             _CurrentRowPosition = 0;
         }
 
-        internal Rectangle? CurrentFrame
-        {
-            get { return new Rectangle(_CurrentColumnPosition * (_SizeOfTextures + _Padding) + _OffsetX, _CurrentRowPosition * (_SizeOfTextures + _Padding) + _OffsetY, _SizeOfTextures, _SizeOfTextures); }
-        }
+        internal Rectangle? CurrentFrame => new Rectangle((_CurrentColumnPosition * (_SizeOfTextures + _Padding)) + _OffsetX, (_CurrentRowPosition * (_SizeOfTextures + _Padding)) + _OffsetY, _SizeOfTextures, _SizeOfTextures);
     }
 }

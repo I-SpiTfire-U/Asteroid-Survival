@@ -26,15 +26,9 @@ namespace Asteroid_Survival.Source
             Origin = new Vector2(texture.Width / 2, texture.Height / 2);
         }
 
-        internal virtual void Update()
-        {
+        internal virtual void Update() { }
 
-        }
-
-        internal virtual void Draw(Rectangle? source = null)
-        {
-            Globals.SpriteBatch.Draw(Texture, Position, source, Color.White, Rotation, Origin, 1, SpriteEffects.None, 0);
-        }
+        internal virtual void Draw(Rectangle? source = null) => Globals.SpriteBatch.Draw(Texture, Position, source, Color.White, Rotation, Origin, 1, SpriteEffects.None, 0);
 
         internal void ScreenWrap(int minWidth, int minHeight, int maxWidth, int maxHeight)
         {
@@ -56,29 +50,14 @@ namespace Asteroid_Survival.Source
             }
         }
 
-        internal void OffsetRotation(float degrees)
-        {
-            Rotation += MathHelper.ToRadians(degrees);
-        }
+        internal void OffsetRotation(float degrees) => Rotation += MathHelper.ToRadians(degrees);
 
-        internal float GetRotation
-        {
-            get { return MathHelper.ToDegrees(Rotation); }
-        }
+        internal float GetRotation => MathHelper.ToDegrees(Rotation);
 
-        internal void SetRotation(float degrees)
-        {
-            Rotation = MathHelper.ToRadians(degrees);
-        }
+        internal void SetRotation(float degrees) => Rotation = MathHelper.ToRadians(degrees);
 
-        internal Vector2 GetPosition
-        {
-            get { return Position; }
-        }
+        internal Vector2 GetPosition => Position;
 
-        internal void SetPosition(Vector2 position)
-        {
-            Position = position;
-        }
+        internal void SetPosition(Vector2 position) => Position = position;
     }
 }

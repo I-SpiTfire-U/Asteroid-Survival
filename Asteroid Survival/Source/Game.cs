@@ -15,14 +15,15 @@ namespace Asteroid_Survival.Source
         private int _Score;
         private int _WindowWidth;
         private int _WindowHeight;
-        private int _MaxBigAsteroids = 5;
+        private int _MaxBigAsteroids;
         private bool _HasFired = false;
         private bool _IsDead = true;
-        private Random _Random = new Random();
-        private GraphicsDeviceManager _Graphics;
+        private readonly Random _Random = new();
+        private readonly GraphicsDeviceManager _Graphics;
         private Animation _PlayerMoveAnimation;
 
         // Content
+        private Texture2D _Texture2D_Keys;
         private Texture2D _Texture2D_Player;
         private Texture2D _Texture2D_Bullet;
         private Texture2D[] _Texture2D_Asteroid;
@@ -34,14 +35,16 @@ namespace Asteroid_Survival.Source
 
         // Entities
         private Player _Player;
-        private List<Bullet> _SpawnedBullets = new List<Bullet>();
-        private List<Asteroid> _SpawnedAsteroids = new List<Asteroid>();
+        private readonly List<Bullet> _SpawnedBullets = [];
+        private readonly List<Asteroid> _SpawnedAsteroids = [];
 
         public Game()
         {
-            _Graphics = new GraphicsDeviceManager(this);
-            _Graphics.PreferredBackBufferWidth = 600;
-            _Graphics.PreferredBackBufferHeight = 600;
+            _Graphics = new GraphicsDeviceManager(this)
+            {
+                PreferredBackBufferWidth = 600,
+                PreferredBackBufferHeight = 600
+            };
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -49,7 +52,6 @@ namespace Asteroid_Survival.Source
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             _WindowWidth = _Graphics.PreferredBackBufferWidth;
             _WindowHeight = _Graphics.PreferredBackBufferHeight;
 
@@ -60,7 +62,6 @@ namespace Asteroid_Survival.Source
         {
             Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
             _Texture2D_Asteroid =
             [
                 Content.Load<Texture2D>("Graphics/AsteroidSmall"),
@@ -69,6 +70,7 @@ namespace Asteroid_Survival.Source
             ];
             _Texture2D_Player = Content.Load<Texture2D>("Graphics/Player");
             _Texture2D_Bullet = Content.Load<Texture2D>("Graphics/Bullet");
+            _Texture2D_Keys = Content.Load<Texture2D>("Graphics/Keys");
             _SpriteFont_Hyperspace = Content.Load<SpriteFont>("Fonts/Hyperspace");
             _SoundEffect_Shoot = Content.Load<SoundEffect>("Audio/Shoot");
             _SoundEffect_Start = Content.Load<SoundEffect>("Audio/Start");
@@ -81,7 +83,6 @@ namespace Asteroid_Survival.Source
 
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Add your update logic here
             GetKeyboardInput();
             UpdateBullets();
             UpdateAsteroids();
@@ -91,7 +92,7 @@ namespace Asteroid_Survival.Source
                 CreateAsteroid(_Random.Next(1, 3), new(-64, -64));
             }
 
-            if (_Score > 1000 * _MaxBigAsteroids + 100 * _MaxBigAsteroids)
+            if (_Score > (1000 * _MaxBigAsteroids) + (100 * _MaxBigAsteroids))
             {
                 _MaxBigAsteroids += 5;
             }
@@ -106,9 +107,9 @@ namespace Asteroid_Survival.Source
             GraphicsDevice.Clear(Color.Black);
             Globals.SpriteBatch.Begin();
 
-            // TODO: Add your drawing code here
             Globals.SpriteBatch.DrawString(_SpriteFont_Hyperspace, _Score.ToString(), new Vector2(10, 6), Color.White);
             Globals.SpriteBatch.DrawString(_SpriteFont_Hyperspace, _Message, new Vector2(230, 350), Color.White);
+            Globals.SpriteBatch.Draw(_Texture2D_Keys, new Rectangle(10, 570, 96, 16), Color.White);
 
             foreach (Bullet bullet in _SpawnedBullets)
             {
@@ -162,14 +163,14 @@ namespace Asteroid_Survival.Source
                 if (_IsDead)
                 {
                     ResetGame();
-                    _SoundEffect_Start.Play();
+                    _ = _SoundEffect_Start.Play();
                 }
 
                 if (!_HasFired)
                 {
                     _SpawnedBullets.Add(new Bullet(_Texture2D_Bullet, _Player.GetRotation, _Player.GetPosition));
                     _HasFired = true;
-                    _SoundEffect_Shoot.Play();
+                    _ = _SoundEffect_Shoot.Play();
                 }
             }
             else
@@ -198,9 +199,10 @@ namespace Asteroid_Survival.Source
 
                 if (_SpawnedAsteroids[i].IsCollidingWith(_Player.GetPosition) && !_IsDead)
                 {
-                    EndGame();
+                    _IsDead = true;
+                    _Message = "Game Over\n [space]";
                     SplitAsteroid(_SpawnedAsteroids[i]);
-                    _SoundEffect_Explosion2.Play();
+                    _ = _SoundEffect_Explosion2.Play();
                     continue;
                 }
 
@@ -225,26 +227,18 @@ namespace Asteroid_Survival.Source
                 CreateAsteroid(a.Size - 1, a.GetPosition);
                 CreateAsteroid(a.Size - 1, a.GetPosition);
             }
-            _SpawnedAsteroids.Remove(a);
+            _ = _SpawnedAsteroids.Remove(a);
             _Score += 140 * (a.Size + 1);
-            _SoundEffect_Explosion1.Play();
+            _ = _SoundEffect_Explosion1.Play();
         }
 
-        private void CreateAsteroid(int size, Vector2 position)
-        {
-            _SpawnedAsteroids.Add(new Asteroid(_Texture2D_Asteroid[size], size, _Random.Next(360), position));
-        }
-
-        private void EndGame()
-        {
-            _IsDead = true;
-            _Message = "Game Over\n [space]";
-        }
+        private void CreateAsteroid(int size, Vector2 position) => _SpawnedAsteroids.Add(new Asteroid(_Texture2D_Asteroid[size], size, _Random.Next(360), position));
 
         private void ResetGame()
         {
             _Message = "";
             _Score = 0;
+            _MaxBigAsteroids = 5;
             _IsDead = false;
             _HasFired = true;
             _Player.SetPosition(new Vector2(_WindowWidth / 2, _WindowHeight / 2));

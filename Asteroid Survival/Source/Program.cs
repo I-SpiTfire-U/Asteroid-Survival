@@ -1,3 +1,3 @@
 ﻿
-using var game = new Asteroid_Survival.Source.Game();
+using Asteroid_Survival.Source.Game game = new();
 game.Run();
